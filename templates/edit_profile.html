@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {% if user.id %}
+    Редактировать профиль
+  {% else %}
+    Добавить новый профиль
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<h2>
+  {% if user.id %}
+    Редактировать профиль
+  {% else %}
+    Добавить новый профиль
+  {% endif %}
+</h2>
+
+<!-- Сообщение об успехе -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-success">
+      {{ messages[0] }}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- Форма редактирования или добавления профиля -->
+<form method="post" action="">
+    <div class="form-group">
+        <label for="name">Имя</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Введите имя"
+               value="{{ user.name or '' }}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Почта</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Введите почту"
+               value="{{ user.email or '' }}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Пароль</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Введите пароль"
+               value="{{ user.password or '' }}" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        {% if user.id %}
+          Сохранить изменения
+        {% else %}
+          Добавить профиль
+        {% endif %}
+    </button>
+</form>
+{% endblock %}
